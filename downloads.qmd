@@ -1,6 +1,7 @@
 ---
 format: html
-echo: false
+code-fold: true
+title: Quarto downloads for the last two releases
 ---
 
 ```{r}
@@ -12,7 +13,17 @@ if (!file.exists("downloads-per-day.csv")) {
 }
 ```
 
+## Quarto downloads for v1.4 and v1.5, over the last 100 GitHub releases
+
+The dataset is slightly wonky because we do not have access to daily data,
+and so have to assume a constant rate of downloads from one release to the next,
+as well as assume that no one downloads a specifically-older release after a newer
+one exists. The latter assumption is likely fine. The former really isn't, but
+it's the best we can do without tracking historical data ourselves.
+
 ```{r}
+#| label: fig-downloads
+#| fig-cap: Quarto Downloads from GitHub releases for the 100 most recent releases, grouped by the major version of Quarto.
 #| warning: false
 library(tidyverse)
 library(ggplot2)
