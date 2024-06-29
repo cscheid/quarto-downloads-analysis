@@ -1,0 +1,27 @@
+---
+format: html
+echo: false
+---
+
+```{r}
+#| output: false
+# I know, I know.
+if (!file.exists("downloads-per-day.csv")) {
+    system("./gh-releases.sh")
+    system("./process-gh-releases.ts > downloads-per-day.csv")
+}
+```
+
+```{r}
+#| warning: false
+library(tidyverse)
+library(ggplot2)
+df <- read_csv("downloads-per-day.csv")
+df <- df %>% mutate(date = as.Date(date))
+
+ggplot(df, aes(x = date, y = downloads, colour = version)) +
+  geom_point() + 
+  labs(title = "Downloads per day",
+       x = "Date",
+       y = "Downloads")
+```
